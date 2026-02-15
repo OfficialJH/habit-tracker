@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Habit Tracker</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A simple, privacy-focused habit tracker to help you reach your goals.">
+    <!-- Favicon created using https://www.favicon.cc/ -->
+    <link rel="icon" type="image/x-icon" href="./icons/favicon.ico">
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#eee">
+    <meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h2>Habit Tracker</h2>
+        <div class="actions">
+            <button class="btn-pill left" onclick="showAddModal()">+ New</button>
+            <button id="settingsBtn" class="btn-pill right" onclick="showSettingsModal()">⚙</button>
+        </div>
+    </header>
+
+    <!-- Main Page Elements -->
+    <main class="container">
+        <div class="layout">
+            <section class="panel habits-panel">
+                <div id="habitList"></div>
+            </section>
+
+            <section class="panel calendar-panel">
+                <div class="unified-calendar">
+                    <div class="calendar-header">
+                        <div class="calendar-controls">
+                            <button class="btn-pill left" onclick="changePeriod(-1)">&lt;</button>
+                            <button onclick="jumpToToday()">Today</button>
+                            <button class="btn-pill right" onclick="changePeriod(1)">&gt;</button>
+                        </div>
+                        <span id="calendarLabel" class="calendar-label"></span>
+                    </div>
+                    <div id="mainCalendarGrid" class="calendar-grid"></div>
+                </div>
+
+                <div id="dayDetailPanel">
+                    <h3 id="dayDetailTitle" class="day-detail-title"></h3>
+                    <div id="dayHabitList"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Bottom Navigation for Mobile -->
+    <div class="bottom-nav">
+        <button id="navHabits" class="active" onclick="showPanel('habits')">Habits</button>
+        <button id="navCalendar" onclick="showPanel('calendar')">Calendar</button>
+    </div>
+
+    <!-- Habit Modal -->
+    <div id="habitModal" class="modal">
+        <div class="modal-content">
+            <h3 id="modalTitle" class="modal-title">Create New Habit</h3>
+            <input type="hidden" id="editHabitId">
+
+            <div class="flex gap-10">
+                <input type="text" id="habitName" class="flex-3" maxlength="20" placeholder="Name (max 20 char)">
+                <input type="color" id="habitColor" class="flex-1" value="#ff5555">
+            </div>
+
+            <div class="flex gap-10">
+                <select id="habitFreq" class="flex-3">
+                    <option value="daily">Daily</option>
+                    <option value="weekly">Weekly</option>
+                    <option value="monthly">Monthly</option>
+                </select>
+                <input type="number" id="habitGoal" class="flex-1" value="1" min="1">
+            </div>
+
+            <div class="flex gap-10">
+                <button class="flex-1" onclick="handleSaveHabit()">Save</button>
+                <button class="flex-1 btn-danger hidden" id="deleteBtn" onclick="confirmDelete()">Delete</button>
+                <button class="flex-1" onclick="Modal.close('habitModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title danger">Delete Habit?</h3>
+            <span>This will erase all history for this habit. This cannot be undone.</span>
+            <div class="flex gap-10">
+                <button class="btn-danger flex-1" onclick="handleDeleteHabit()">Yes, Delete</button>
+                <button class="flex-1" onclick="Modal.close('confirmModal')">No, Go Back</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div id="settingsModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Settings</h3>
+
+            <!-- Import / Export -->
+            <button class="w-100"
+                onclick="Modal.close('settingsModal'); showDataModal();">
+                Import / Export Data
+            </button>
+
+            <!-- Help + About row -->
+            <div class="flex gap-10">
+                <button class="flex-1"
+                    onclick="Modal.close('settingsModal'); showHelpModal();">
+                    Help
+                </button>
+
+                <button class="flex-1"
+                    onclick="Modal.close('settingsModal'); showAboutModal();">
+                    About
+                </button>
+            </div>
+
+            <button class="w-100" onclick="Modal.close('settingsModal')">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Import / Export Modal -->
+    <div id="dataModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Import / Export Data</h3>
+            <div class="flex gap-10">
+                <button class="flex-1" onclick="triggerFileImport('csv')">Import CSV</button>
+                <button class="flex-1" onclick="triggerFileImport('json')">Import JSON</button>
+            </div>
+            <div class="flex gap-10">
+                <button class="flex-1" onclick="exportCSV()">Export as CSV</button>
+                <button class="flex-1" onclick="exportJSON()">Export as JSON</button>
+            </div>
+            <button class="w-100" onclick="Modal.close('dataModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Import Replace Confirmation -->
+    <div id="importConfirmModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title danger">Replace All Data?</h3>
+            <span>Importing will permanently replace all current habits and history. This cannot be undone.</span>
+            <div class="flex gap-10">
+                <button class="btn-danger flex-1" onclick="confirmImportReplace()">Yes, Replace</button>
+                <button class="flex-1" onclick="Modal.close('importConfirmModal')">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="helpModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Help</h3>
+
+            <ul class="help-list">
+                <li>Click/tap <strong>"+ New"</strong> to create a habit.</li>
+                <li>Use the <strong>"✓"</strong> button to mark a habit complete.</li>
+                <li>Switch between <strong>"Habits"</strong> and <strong>"Calendar"</strong> on mobile using the bottom navigation.</li>
+                <li>Click/tap any day in the calendar to see detailed completions.</li>
+                <li>Use <strong>"Import / Export"</strong> to back up your data (CSV & JSON supported).</li>
+            </ul>
+
+            <button class="w-100" onclick="Modal.close('helpModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">About</h3>
+
+            <span>
+                Habit Tracker is a simple, privacy-focused tool to help you track your habits.
+                All data is stored locally in your browser, and nothing is sent to a server.
+            </span><br>
+
+            <span>
+                Created by <strong>OfficialJH</strong>
+            </span>
+            <span>
+                <a href="https://officialjh.github.io/" target="_blank">Main Website</a>
+                <span>|</span>
+                <a href="https://github.com/OfficialJH/habit-tracker" target="_blank">Source Code</a>
+            </span>
+
+            <button class="w-100" onclick="Modal.close('aboutModal')">Close</button>
+        </div>
+    </div>
+
+    <input type="file" class="hidden" id="fileInput">
+
+    <script src="script.js"></script>
+</body>
+
+</html>

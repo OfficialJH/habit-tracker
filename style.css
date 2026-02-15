@@ -1,0 +1,429 @@
+/* ===== ROOT & THEME ===== */
+:root {
+    --text: #000;
+    --bg: #eee;
+    --bg2: #f4f4f4;
+    --bg3: #ccc;
+    --accent: #ff5555;
+    --hover: #ffaaaa;
+    --button: #fff;
+    --border: #ccc;
+    --card-shadow: 0 4px 12px rgba(0,0,0,0.2)
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #fff;
+        --bg: #222;
+        --bg2: #333;
+        --bg3: #1a1a1a;
+        --button: #444;
+        --border: #555;
+        --card-shadow: 0 4px 16px rgba(0,0,0,0.4);
+    }
+}
+
+* {
+    box-sizing: border-box;
+    font-family: "Courier New", Courier, monospace;
+}
+
+
+/* ===== BASE ELEMENTS ===== */
+body {
+    background: var(--bg);
+    color: var(--text);
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+a:hover { color: var(--hover) }
+
+
+/* ===== UTILITY CLASSES ===== */
+.flex { display: flex; }
+.flex.col { flex-direction: column; }
+
+.flex-3 { flex: 3; }
+.flex-1 { flex: 1; }
+
+.w-100 { width: 100%; }
+
+.hidden { display: none; }
+
+.gap-4 { gap: 4px; }
+.gap-10 { gap: 10px; }
+
+
+/* ===== BUTTONS ===== */
+button {
+    background: var(--button);
+    color: var(--text);
+    cursor: pointer;
+
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.2);
+
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+.btn-danger {
+    background: var(--accent);
+    color: #fff;
+}
+
+.btn-pill { min-width: 40px }
+
+.btn-pill.left { border-radius: 50px 10px 10px 50px }
+
+.btn-pill.right { border-radius: 10px 50px 50px 10px }
+
+
+/* ===== INPUTS & SELECTS ===== */
+input,
+select {
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    background: var(--button);
+    color: var(--text);
+    font-family: inherit;
+    width: 100%;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+/* Fixes narrow dropdown on iOS */
+select {
+    -webkit-appearance: none;
+    appearance: none;
+
+    padding-right: 36px;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+
+    background-image: url("data:image/svg+xml;utf8,<svg fill='none' stroke='black' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><polyline points='6 9 12 15 18 9'/></svg>");
+
+    @media (prefers-color-scheme: dark) {
+        background-image: url("data:image/svg+xml;utf8,<svg fill='none' stroke='white' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'><polyline points='6 9 12 15 18 9'/></svg>");
+    }
+}
+
+input:focus,
+select:focus {
+    outline: 1px solid var(--text);
+}
+
+
+/* ===== HEADER ===== */
+header {
+    width: 100%;
+    max-width: 1200px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+h2 {
+    margin: 2px;
+    text-align: left;
+    word-break: break-word;
+}
+
+
+/* ===== ACTION BAR ===== */
+.actions {
+    display: flex;
+    gap: 6px;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
+
+
+/* ===== CONTAINER ===== */
+.container {
+    width: 100%;
+    max-width: 1200px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+
+/* ===== LAYOUT ===== */
+.layout {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    min-height: 0;
+}
+
+
+/* ===== PANELS ===== */
+.panel {
+    padding: 1px 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+#habitList { flex: 0 0 auto }
+
+
+/* ===== HABIT CARDS ===== */
+.habit-card {
+    background: var(--bg2);
+    border-radius: 10px;
+    padding: 12px;
+    margin-bottom: 12px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+
+    border-left: 10px solid transparent;
+    box-shadow: var(--card-shadow);
+}
+
+.habit-info h3 {
+    margin: 0;
+    font-size: 1.15rem;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.habit-meta {
+    font-size: 0.8rem;
+    opacity: 0.6;
+    text-transform: capitalize;
+}
+
+.empty-state {
+    padding: 16px;
+    background: var(--bg2);
+    border-radius: 10px;
+    opacity: 0.7;
+    font-size: 0.9rem;
+}
+
+
+/* ===== TOGGLE BUTTONS ===== */
+.toggle-btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+
+/* ===== CALENDAR ===== */
+.unified-calendar {
+    background: var(--bg2);
+    padding: 12px;
+    margin-bottom: 8px;
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+}
+
+.calendar-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.calendar-controls {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-label {
+    flex: 1;
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.2rem;
+    word-break: break-word;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 4px;
+    min-width: 100%;
+}
+
+.calendar-day {
+    background: var(--button);
+    border-radius: 4px;
+    padding: 4px;
+    min-height: 80px;
+
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: background 0.1s ease;
+}
+
+.calendar-day:hover { background: var(--bg2) }
+
+.calendar-day.header {
+    font-weight: bold;
+    background: transparent;
+    cursor: default;
+    min-height: 24px;
+}
+
+.calendar-day.selected { outline: 2px solid var(--text) }
+
+.calendar-day.other-month {
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.habit-dots {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-top: 4px;
+}
+
+.habit-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.day-detail-title {
+    margin-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 4px;
+}
+
+
+/* ===== MODALS ===== */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.8);
+
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+
+    text-align: left;
+}
+
+.modal-content {
+    background: var(--bg);
+    width: 100%;
+    max-width: 320px;
+    max-height: 90vh;
+    margin: 8px;
+    padding: 12px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    gap: 10px;
+}
+
+.modal-title {
+    margin: 0;
+    padding-bottom: 4px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.modal-title.danger { color: var(--accent) }
+
+.modal-content span { overflow-y: auto }
+
+#habitColor {
+    height: 40px;
+    cursor: pointer;
+}
+
+.help-list { padding-left: 16px; overflow-y: auto }
+
+
+/* ===== RESPONSIVE LAYOUT ===== */
+/* Desktop: full month view */
+@media (min-width: 900px) {
+    .habits-panel { flex: 0 0 45%; }
+    .calendar-panel { flex: 1 }
+    .bottom-nav { display: none }
+}
+
+/* Mobile: stacked layout */
+@media (max-width: 899px) {
+    .layout { height: 100% }
+
+    .panel { display: none }
+
+    .panel.active {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding-bottom: 80px;
+    }
+
+    .calendar-grid { min-width: unset }
+
+    .calendar-day { min-height: 70px }
+
+    .bottom-nav {
+        position: fixed;
+        bottom: calc(20px + env(safe-area-inset-bottom));
+        width: 75%;
+        max-width: 350px;
+        height: 48px;
+
+        background: var(--bg2);
+
+        display: flex;
+        padding: 6px;
+        gap: 4px;
+        border-radius: 999px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+    }
+
+    .bottom-nav button {
+        flex: 1;
+        border: none;
+        background: none;
+        font-size: 1rem;
+        font-weight: bold;
+        color: var(--text);
+        box-shadow: none;
+        border-radius: 999px;
+        transition: background 0.1s ease;
+    }
+
+    .bottom-nav button.active {
+        background: var(--button);
+        box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+}
