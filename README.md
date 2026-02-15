@@ -1,2 +1,2 @@
 # Habit Tracker
-A simple, privacy-focused tool to help you track your habits.
+A simple, privacy-focused habit tracker to help you reach your goals.
