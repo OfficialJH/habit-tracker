@@ -183,7 +183,7 @@
             <h3 class="modal-title">About</h3>
 
             <span>
-                Habit Tracker is a simple, privacy-focused habit tracker to help you reach your goals.
+                A simple, privacy-focused habit tracker to help you reach your goals.
                 All data is stored locally in your browser, and nothing is sent to a server.
             </span><br>
 
@@ -200,10 +200,21 @@
         </div>
     </div>
 
+    <!-- Update Available Modal -->
+    <div id="updateModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title">Update Available</h3>
+            <span>A new version is available!</span>
+            <div class="flex gap-10">
+                <button class="flex-1" onclick="applyUpdate()">Update</button>
+                <button class="flex-1" onclick="Modal.close('updateModal')">Later</button>
+            </div>
+        </div>
+    </div>
+
     <input type="file" class="hidden" id="fileInput">
 
     <script src="script.js"></script>
 </body>
-
 
 </html>

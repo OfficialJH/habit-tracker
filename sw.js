@@ -1,4 +1,4 @@
-const CACHE_NAME = 'habit-v1';
+const CACHE_NAME = 'habit-v2026.02.16';
 const ASSETS = [
   './',
   './index.html',
@@ -9,6 +9,7 @@ const ASSETS = [
   './icons/icon-512.png'
 ];
 
+
 // Install: Cache all static assets
 self.addEventListener('install', (e) => {
   e.waitUntil(
@@ -16,22 +17,49 @@ self.addEventListener('install', (e) => {
   );
 });
 
+
 // Activate: Clean up old caches
 self.addEventListener('activate', (e) => {
   e.waitUntil(
-    caches.keys().then((keys) => {
-      return Promise.all(
-        keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key))
-      );
-    })
+    Promise.all([
+      caches.keys().then((keys) =>
+        Promise.all(
+          keys.filter(key => key !== CACHE_NAME)
+              .map(key => caches.delete(key))
+        )
+      )
+    ])
   );
 });
 
+
 // Fetch: Serve from cache, then network
 self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    caches.match(e.request).then((response) => {
-      return response || fetch(e.request);
-    })
-  );
+  if (e.request.mode === 'navigate') {
+    // Network-first for HTML
+    e.respondWith(
+      fetch(e.request)
+        .then(response => {
+          const copy = response.clone();
+          caches.open(CACHE_NAME).then(cache => cache.put(e.request, copy));
+          return response;
+        })
+        .catch(() => caches.match(e.request))
+    );
+  } else {
+    // Cache-first for everything else
+    e.respondWith(
+      caches.match(e.request).then(response => {
+        return response || fetch(e.request);
+      })
+    );
+  }
+});
+
+
+// Listen for update trigger from page
+self.addEventListener('message', (event) => {
+  if (event.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
 });

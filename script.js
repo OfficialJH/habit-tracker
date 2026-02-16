@@ -1,7 +1,37 @@
 window.addEventListener('load', () => {
+  if (!('serviceWorker' in navigator)) return;
+
   navigator.serviceWorker.register('./sw.js')
-    .then(() => console.log("Service Worker Registered"))
-    .catch((err) => console.log("Service Worker Failed", err));
+    .then((reg) => {
+
+      console.log("Service Worker registered");
+
+      // If there's already an update waiting
+      if (reg.waiting) {
+        Modal.open('updateModal');
+      }
+
+      // Detect new updates
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+
+        newWorker.addEventListener('statechange', () => {
+          if (
+            newWorker.state === 'installed' &&
+            navigator.serviceWorker.controller
+          ) {
+            Modal.open('updateModal');
+          }
+        });
+      });
+
+    })
+    .catch((err) => console.log("Service Worker failed", err));
+
+  // Reload when new SW activates
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    window.location.reload();
+  });
 });
 
 
@@ -656,4 +686,12 @@ function confirmImportReplace() {
     refreshUI();
 
     Modal.closeAll();
+}
+
+function applyUpdate() {
+  navigator.serviceWorker.getRegistration().then((reg) => {
+    if (reg && reg.waiting) {
+      reg.waiting.postMessage('SKIP_WAITING');
+    }
+  });
 }
