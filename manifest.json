@@ -1,12 +1,12 @@
 {
   "name": "Habit Tracker",
-  "short_name": "Habits",
+  "short_name": "Habit Tracker",
   "lang": "en-US",
   "start_url": "./index.html",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#eee",
-  "background_color": "#eee",
+  "theme_color": "#222",
+  "background_color": "#222",
   "icons": [
     {
       "src": "./icons/favicon.ico",

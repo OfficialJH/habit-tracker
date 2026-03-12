@@ -11,9 +11,9 @@
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#eee">
-    <meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)">
-    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#222">
+    <meta name="theme-color" content="#eee" media="(prefers-color-scheme: light)">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 
     <link rel="stylesheet" href="style.css">
@@ -24,7 +24,7 @@
         <h2>Habit Tracker</h2>
         <div class="actions">
             <button class="btn-pill left" onclick="showAddModal()">+ New</button>
-            <button id="settingsBtn" class="btn-pill right" onclick="showSettingsModal()">⚙</button>
+            <button id="settingsBtn" class="btn-pill right" onclick="Modal.open('settingsModal')">⚙</button>
         </div>
     </header>
 
@@ -85,7 +85,7 @@
             <div class="flex gap-10">
                 <button class="flex-1" onclick="handleSaveHabit()">Save</button>
                 <button class="flex-1 btn-danger hidden" id="deleteBtn" onclick="confirmDelete()">Delete</button>
-                <button class="flex-1" onclick="Modal.close('habitModal')">Cancel</button>
+                <button class="flex-1" onclick="Modal.close('habitModal')" autofocus>Cancel</button>
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
             <span>This will erase all history for this habit. This cannot be undone.</span>
             <div class="flex gap-10">
                 <button class="btn-danger flex-1" onclick="handleDeleteHabit()">Yes, Delete</button>
-                <button class="flex-1" onclick="Modal.close('confirmModal')">No, Go Back</button>
+                <button class="flex-1" onclick="Modal.close('confirmModal')" autofocus>No, Go Back</button>
             </div>
         </div>
     </div>
@@ -107,28 +107,15 @@
         <div class="modal-content">
             <h3 class="modal-title">Settings</h3>
 
-            <!-- Import / Export -->
-            <button class="w-100"
-                onclick="Modal.close('settingsModal'); showDataModal();">
-                Import / Export Data
-            </button>
+            <button class="w-100" onclick="Modal.close('settingsModal'); Modal.open('dataModal');">Import / Export Data</button>
 
-            <!-- Help + About row -->
             <div class="flex gap-10">
-                <button class="flex-1"
-                    onclick="Modal.close('settingsModal'); showHelpModal();">
-                    Help
-                </button>
+                <button class="flex-1" onclick="Modal.close('settingsModal'); Modal.open('helpModal');">Help</button>
 
-                <button class="flex-1"
-                    onclick="Modal.close('settingsModal'); showAboutModal();">
-                    About
-                </button>
+                <button class="flex-1" onclick="Modal.close('settingsModal'); Modal.open('aboutModal');">About</button>
             </div>
 
-            <button class="w-100" onclick="Modal.close('settingsModal')">
-                Close
-            </button>
+            <button class="w-100" onclick="Modal.close('settingsModal')" autofocus>Close</button>
         </div>
     </div>
 
@@ -144,7 +131,7 @@
                 <button class="flex-1" onclick="exportCSV()">Export as CSV</button>
                 <button class="flex-1" onclick="exportJSON()">Export as JSON</button>
             </div>
-            <button class="w-100" onclick="Modal.close('dataModal')">Close</button>
+            <button class="w-100" onclick="Modal.close('dataModal')" autofocus>Close</button>
         </div>
     </div>
 
@@ -155,7 +142,7 @@
             <span>Importing will permanently replace all current habits and history. This cannot be undone.</span>
             <div class="flex gap-10">
                 <button class="btn-danger flex-1" onclick="confirmImportReplace()">Yes, Replace</button>
-                <button class="flex-1" onclick="Modal.close('importConfirmModal')">Cancel</button>
+                <button class="flex-1" onclick="Modal.close('importConfirmModal')" autofocus>Cancel</button>
             </div>
         </div>
     </div>
@@ -165,13 +152,17 @@
         <div class="modal-content">
             <h3 class="modal-title">Help</h3>
 
-            <ul class="help-list">
-                <li>Click/tap <strong>"+ New"</strong> to create a habit.</li>
-                <li>Use the <strong>"✓"</strong> button to mark a habit complete.</li>
-                <li>Switch between <strong>"Habits"</strong> and <strong>"Calendar"</strong> on mobile using the bottom navigation.</li>
-                <li>Click/tap any day in the calendar to see detailed completions.</li>
-                <li>Use <strong>"Import / Export"</strong> to back up your data (CSV & JSON supported).</li>
-            </ul>
+            <span>
+                Create habits with custom colors and frequencies (daily, weekly, monthly). Select <strong>"+"</strong> on any habit to log progress and track your streak.
+            </span><br>
+
+            <span>
+                Click/tap any date in the calendar to view or edit history for that specific day.
+            </span><br>
+
+            <span>
+                Your data stays on your device. Use <strong>"Import/Export"</strong> to create backups or move data between browsers.
+            </span>
 
             <button class="w-100" onclick="Modal.close('helpModal')">Close</button>
         </div>
@@ -184,7 +175,6 @@
 
             <span>
                 A simple, privacy-focused habit tracker to help you reach your goals.
-                All data is stored locally in your browser, and nothing is sent to a server.
             </span><br>
 
             <span>
@@ -207,7 +197,7 @@
             <span>A new version is available!</span>
             <div class="flex gap-10">
                 <button class="flex-1" onclick="applyUpdate()">Update</button>
-                <button class="flex-1" onclick="Modal.close('updateModal')">Later</button>
+                <button class="flex-1" onclick="Modal.close('updateModal') autofocus">Later</button>
             </div>
         </div>
     </div>

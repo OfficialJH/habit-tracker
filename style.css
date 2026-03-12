@@ -3,7 +3,6 @@
     --text: #000;
     --bg: #eee;
     --bg2: #f4f4f4;
-    --bg3: #ccc;
     --accent: #ff5555;
     --hover: #ffaaaa;
     --button: #fff;
@@ -16,7 +15,6 @@
         --text: #fff;
         --bg: #222;
         --bg2: #333;
-        --bg3: #1a1a1a;
         --button: #444;
         --border: #555;
         --card-shadow: 0 4px 16px rgba(0,0,0,0.4);
@@ -101,6 +99,7 @@ select {
     background: var(--button);
     color: var(--text);
     font-family: inherit;
+    font-size: 16px;
     width: 100%;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
@@ -366,8 +365,6 @@ h2 {
     height: 40px;
     cursor: pointer;
 }
-
-.help-list { padding-left: 16px; overflow-y: auto }
 
 
 /* ===== RESPONSIVE LAYOUT ===== */

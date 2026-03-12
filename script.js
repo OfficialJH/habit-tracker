@@ -195,22 +195,6 @@ function showEditModal(id) {
     updateGoalVisibility();
 }
 
-function showSettingsModal() {
-    Modal.open('settingsModal');
-}
-
-function showDataModal() {
-    Modal.open('dataModal');
-}
-
-function showHelpModal() {
-    Modal.open('helpModal');
-}
-
-function showAboutModal() {
-    Modal.open('aboutModal');
-}
-
 function parseLocalDate(dateStr) {
     const [year, month, day] = dateStr.split('-').map(Number);
     return new Date(year, month - 1, day);
