@@ -114,7 +114,11 @@ function getCSSVar(name) {
 function refreshUI() {
     renderCalendar();
     renderHabitList();
-    openDayDetail(selectedDateStr);
+
+    const dayModal = document.getElementById('dayDetailModal');
+    if (dayModal && dayModal.style.display === 'flex') {
+        renderDayDetailContent(selectedDateStr);
+    }
 }
 
 function jumpToToday() {
@@ -200,7 +204,7 @@ function parseLocalDate(dateStr) {
     return new Date(year, month - 1, day);
 }
 
-function openDayDetail(dateStr) {
+function renderDayDetailContent(dateStr) {
     const title = document.getElementById('dayDetailTitle');
     const listContainer = document.getElementById('dayHabitList');
 
@@ -257,6 +261,11 @@ function openDayDetail(dateStr) {
     });
 
     listContainer.appendChild(fragment);
+}
+
+function openDayDetail(dateStr) {
+    renderDayDetailContent(dateStr);
+    Modal.open('dayDetailModal');
 }
 
 function handleSaveHabit() {
@@ -478,6 +487,7 @@ function createDayCell(date, todayStr) {
     cell.onclick = () => {
         selectedDateStr = dateStr;
         refreshUI();
+        openDayDetail(dateStr);
     };
 
     mainCalendarGrid.appendChild(cell);

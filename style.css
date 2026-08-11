@@ -321,6 +321,12 @@ h2 {
     padding-bottom: 4px;
 }
 
+#dayHabitList {
+    overflow-y: auto;
+    max-height: 60vh;
+    padding-right: 2px;
+}
+
 
 /* ===== MODALS ===== */
 .modal {

@@ -8,6 +8,7 @@
     <meta name="description" content="A simple, privacy-focused habit tracker to help you reach your goals.">
     <!-- Favicon created using https://www.favicon.cc/ -->
     <link rel="icon" type="image/x-icon" href="./icons/favicon.ico">
+    <link rel="apple-touch-icon" href="./icons/icon-192.png">
 
     <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
@@ -46,11 +47,6 @@
                         <span id="calendarLabel" class="calendar-label"></span>
                     </div>
                     <div id="mainCalendarGrid" class="calendar-grid"></div>
-                </div>
-
-                <div id="dayDetailPanel">
-                    <h3 id="dayDetailTitle" class="day-detail-title"></h3>
-                    <div id="dayHabitList"></div>
                 </div>
             </section>
         </div>
@@ -99,6 +95,15 @@
                 <button class="btn-danger flex-1" onclick="handleDeleteHabit()">Yes, Delete</button>
                 <button class="flex-1" onclick="Modal.close('confirmModal')" autofocus>No, Go Back</button>
             </div>
+        </div>
+    </div>
+
+    <!-- Day Detail Modal -->
+    <div id="dayDetailModal" class="modal">
+        <div class="modal-content">
+            <h3 id="dayDetailTitle" class="modal-title"></h3>
+            <div id="dayHabitList"></div>
+            <button class="w-100" onclick="Modal.close('dayDetailModal')">Close</button>
         </div>
     </div>
 
@@ -164,6 +169,11 @@
                 Your data stays on your device. Use <strong>"Import/Export"</strong> to create backups or move data between browsers.
             </span>
 
+            <span>
+                When updates are made, a popup will appear to offer the choice of either refreshing with the new
+                changes immediately, or at a later point the next time the site/app is opened.
+            </span>
+
             <button class="w-100" onclick="Modal.close('helpModal')">Close</button>
         </div>
     </div>
@@ -180,6 +190,9 @@
             <span>
                 © 2026 OfficialJH | Open source under the <a href="LICENSE.txt" target="_blank">MIT License</a>.
             </span><br>
+
+            <span>Version v2026.08.11</span>
+
             <span>
                 <a href="https://officialjh.github.io/" target="_blank">Main Website</a>
                 |
