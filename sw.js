@@ -1,10 +1,11 @@
-const CACHE_NAME = 'habit-v2026.08.11';
+const CACHE_NAME = 'habit-v2026.08.12';
 const ASSETS = [
   './',
   './index.html',
   './style.css',
   './script.js',
   './manifest.json',
+  './icons/favicon.ico',
   './icons/icon-192.png',
   './icons/icon-512.png'
 ];
