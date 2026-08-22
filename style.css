@@ -293,8 +293,6 @@ h2 {
     min-height: 24px;
 }
 
-.calendar-day.selected { outline: 2px solid var(--text) }
-
 .calendar-day.other-month {
     opacity: 0.3;
     pointer-events: none;

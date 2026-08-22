@@ -477,7 +477,7 @@ function createDayCell(date, todayStr) {
 
     const cell = document.createElement('div');
     cell.className = `calendar-day ${isSelected ? 'selected' : ''}`;
-    if (isToday) cell.style.border = "2px solid var(--accent)";
+    if (isToday) cell.style.border = "2px solid var(--text)";
     
     cell.innerHTML = `
         <span style="font-weight:bold">${date.getDate()}</span>
